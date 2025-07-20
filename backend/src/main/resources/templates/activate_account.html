@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Activate Your Account</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #ffffff;">
+<div style="
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 30px;
+      border-radius: 12px;
+      background-color: #1a1a1a;
+      color: #e5e7eb;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    ">
+
+  <!-- Logo -->
+  <img src="cid:logoImage" alt="Enderbrary Logo" width="80" style="margin-bottom: 20px;" />
+
+  <!-- Title -->
+  <h1 style="font-size: 24px; margin: 0 0 10px; color: #c084fc;">Activate Your Account</h1>
+
+  <!-- Greeting -->
+  <p style="font-size: 16px; margin: 0 0 10px; color: #d1d5db;">
+    Hello <strong th:text="${userName}">User</strong>,
+  </p>
+
+  <!-- Message -->
+  <p style="font-size: 15px; margin-bottom: 30px; color: #a1a1aa;">
+    Thank you for signing up! Use the activation code below to verify your account.
+  </p>
+
+  <!-- Activation Code -->
+  <div style="
+        font-size: 28px;
+        font-weight: bold;
+        background-color: #2e1065;
+        color: #d8b4fe;
+        padding: 16px;
+        border-radius: 10px;
+        margin-bottom: 30px;
+        letter-spacing: 2px;
+      ">
+    <span th:text="${activation_code}">123456</span>
+  </div>
+
+  <!-- CTA Button -->
+  <a
+          th:href="${confirmationUrl}"
+          href="https://localhost:3000/activate?code=123456"
+          target="_blank"
+          style="
+          display: inline-block;
+          background-color: #a855f7;
+          color: #ffffff;
+          text-decoration: none;
+          padding: 12px 24px;
+          border-radius: 6px;
+          font-weight: bold;
+          font-size: 15px;
+        ">
+    Activate Your Account
+  </a>
+
+  <!-- Fallback light mode wrapper -->
+  <div style="
+        color: #333333;
+        background-color: #ffffff;
+        padding: 0;
+        margin: 0;
+        display: none;
+      ">
+    <p style="color: #333;">If you're seeing this section, your client doesn't support dark mode.</p>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Borrow Request Received</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #ffffff;">
+<div style="max-width: 600px; margin: 40px auto; padding: 30px; border-radius: 12px; background-color: #1a1a1a; color: #e5e7eb; font-family: Arial, sans-serif; text-align: center;">
+
+  <img src="cid:logoImage" alt="Enderbrary Logo" width="80" style="margin-bottom: 20px;" />
+  <h1 style="font-size: 24px; margin: 0 0 10px; color: #c084fc;">New Borrow Request</h1>
+
+  <p style="font-size: 16px; margin: 0 0 10px; color: #d1d5db;">
+    Hello <strong th:text="${lenderName}">Lender</strong>,
+  </p>
+
+  <p style="font-size: 15px; margin-bottom: 30px; color: #a1a1aa;">
+    <strong th:text="${borrowerName}">Someone</strong> has requested to borrow your book: <em th:text="${bookTitle}">Book Title</em>.
+  </p>
+
+  <a th:href="${manageRequestUrl}" href="https://localhost:3000/requests" target="_blank"
+     style="display: inline-block; background-color: #a855f7; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 6px; font-weight: bold; font-size: 15px;">
+    Review Request
+  </a>
+</div>
+</body>
+</html>
