@@ -7,7 +7,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export async function uploadToImgbb(file: File): Promise<string> {
   const formData = new FormData();
-  formData.append('image', file);
+  formData.append('image', new File([file], `${crypto.randomUUID()}.${file.name.split('.').pop()}`));
 
   const res = await fetch(`https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}`, {
     method: 'POST',
@@ -15,5 +15,5 @@ export async function uploadToImgbb(file: File): Promise<string> {
   });
 
   const data = await res.json();
-  return data.data.url; // this is the hosted image URL
+  return data.data.url;
 }

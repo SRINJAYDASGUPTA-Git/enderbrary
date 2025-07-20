@@ -1,6 +1,8 @@
 package com.srinjaydg.enderbrary.book.repositories;
 
 import com.srinjaydg.enderbrary.book.models.Book;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -10,7 +12,7 @@ import java.util.UUID;
 
 public interface BookRepository extends JpaRepository<Book, UUID> {
     List<Book> findByOwnerId(UUID ownerId);
-    List<Book> findByIsAvailableTrueAndIsArchivedFalse();
+    Page<Book> findByIsAvailableTrueAndIsArchivedFalse(Pageable pageable);
 
     Optional<Book> findByIdAndOwnerId(UUID id, UUID ownerId);
 

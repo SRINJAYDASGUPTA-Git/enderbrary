@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import {Button} from '@/components/ui/button';
 import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar';
-import {LinkIcon, LogOut, Settings} from 'lucide-react';
+import {BookAIcon, BookOpenIcon, HandHelpingIcon, InboxIcon, LibraryBig, LogOut, Settings} from 'lucide-react';
 import {signOut} from "next-auth/react";
 
 export const UserButton = () => {
@@ -56,10 +56,36 @@ export const UserButton = () => {
                     <span>Profile Settings</span>
                 </DropdownMenuItem>
 
-                <DropdownMenuItem onClick={() => router.push('/short-urls')}>
-                    <LinkIcon className="mr-2 h-4 w-4" />
-                    <span>Short URLs</span>
+                <DropdownMenuItem onClick={() => router.push('/books/me')}>
+                    <LibraryBig className="mr-2 h-4 w-4" />
+                    <span>My Books</span>
                 </DropdownMenuItem>
+
+                <DropdownMenuItem onClick={() => router.push('/books/archived')}>
+                    <BookAIcon className="mr-2 h-4 w-4" />
+                    <span>My Archived Books</span>
+                </DropdownMenuItem>
+
+                <DropdownMenuSeparator />
+
+                <DropdownMenuLabel>Borrow Requests</DropdownMenuLabel>
+
+                <DropdownMenuItem onClick={() => router.push('/borrow/requests')}>
+                    <BookOpenIcon className="mr-2 h-4 w-4" />
+                    <span>My Borrow Requests</span>
+                </DropdownMenuItem>
+
+                <DropdownMenuItem onClick={() => router.push('/borrow/lent')}>
+                    <HandHelpingIcon className="mr-2 h-4 w-4" />
+                    <span>Books I Lent</span>
+                </DropdownMenuItem>
+
+                <DropdownMenuItem onClick={() => router.push('/borrow/incoming')}>
+                    <InboxIcon className="mr-2 h-4 w-4" />
+                    <span>Incoming Requests</span>
+                </DropdownMenuItem>
+
+
 
                 <DropdownMenuSeparator />
 

@@ -3,6 +3,7 @@ package com.srinjaydg.enderbrary.book.controllers;
 import com.srinjaydg.enderbrary.book.request.BookRequest;
 import com.srinjaydg.enderbrary.book.response.BookResponse;
 import com.srinjaydg.enderbrary.book.services.BookService;
+import com.srinjaydg.enderbrary.common.PageResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -29,8 +30,11 @@ public class BookController {
 
     @GetMapping
     @Operation(summary = "List Available Books")
-    public ResponseEntity<List<BookResponse>> getAllAvailableBooks(Authentication connectedUser) {
-        return ResponseEntity.ok(bookService.getAllBooks(connectedUser));
+    public ResponseEntity<PageResponse<BookResponse>> getAllAvailableBooks(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        return ResponseEntity.ok(bookService.getAllBooks(page, size));
     }
 
     @GetMapping("/me")
@@ -68,5 +72,11 @@ public class BookController {
     @Operation(summary = "Get Book by ID")
     public ResponseEntity<BookResponse> getBookById(@PathVariable UUID bookId) {
         return ResponseEntity.ok(bookService.getBookDetails(bookId));
+    }
+
+    @PutMapping("/{bookId}")
+    @Operation(summary = "Update Book Details")
+    public ResponseEntity<BookResponse> updateBookDetails(@PathVariable UUID bookId, @RequestBody BookRequest request, Authentication connectedUser) {
+        return ResponseEntity.ok(bookService.updateBook(bookId, request, connectedUser));
     }
 }

@@ -5,10 +5,13 @@ import com.srinjaydg.enderbrary.book.models.Book;
 import com.srinjaydg.enderbrary.book.repositories.BookRepository;
 import com.srinjaydg.enderbrary.book.request.BookRequest;
 import com.srinjaydg.enderbrary.book.response.BookResponse;
+import com.srinjaydg.enderbrary.common.PageResponse;
 import com.srinjaydg.enderbrary.user.models.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -34,16 +37,20 @@ public class BookService {
         return bookMapper.toBookResponse(saved);
     }
 
-    public List<BookResponse> getAllBooks(Authentication connectedUser) {
-        User user = (User) connectedUser.getPrincipal();
-        if (user == null) {
-            log.error("User not authenticated");
-            throw new BadCredentialsException("User not authenticated");
-        }
-        List<Book> books = bookRepository.findByIsAvailableTrueAndIsArchivedFalse();
-        return books.stream()
-                .map(bookMapper::toBookResponse)
-                .toList();
+    public PageResponse<BookResponse> getAllBooks(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Book> books = bookRepository.findByIsAvailableTrueAndIsArchivedFalse(pageable);
+        List<BookResponse> bookResponses = books.stream ()
+                .map(bookMapper::toBookResponse).toList ();
+        return new PageResponse<> (
+                bookResponses,
+                books.getNumber (),
+                books.getSize (),
+                books.getTotalElements (),
+                books.getTotalPages (),
+                books.isFirst (),
+                books.isLast ()
+        );
     }
 
     public List<BookResponse> getBooksByOwner(Authentication connectedUser) {
@@ -102,5 +109,21 @@ public class BookService {
         Book book = bookRepository.findByIdAndOwnerId(bookId, user.getId())
                 .orElseThrow(() -> new NoSuchElementException("Book not found or not owned by user"));
         bookRepository.delete(book);
+    }
+
+    public BookResponse updateBook(UUID bookId, BookRequest request, Authentication connectedUser) {
+        User user = (User) connectedUser.getPrincipal();
+        Book book = bookRepository.findByIdAndOwnerId(bookId, user.getId())
+                .orElseThrow(() -> new NoSuchElementException("Book not found or not owned by user"));
+
+        // Update book details
+        book.setTitle(request.title());
+        book.setAuthor(request.author());
+        book.setCategory(request.category());
+        book.setCoverUrl(request.coverUrl());
+        book.setDescription(request.description());
+
+        Book updatedBook = bookRepository.save(book);
+        return bookMapper.toBookResponse(updatedBook);
     }
 }
