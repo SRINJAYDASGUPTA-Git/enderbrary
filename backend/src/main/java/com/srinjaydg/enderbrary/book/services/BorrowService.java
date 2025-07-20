@@ -140,7 +140,7 @@ public class BorrowService {
 
     public List<BorrowRequestResponse> getApprovedBorrows(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
-        return borrowRequestRepository.findByBorrowerIdAndStatus(user.getId(), BorrowStatus.APPROVED).stream()
+        return borrowRequestRepository.findByLenderIdAndStatus (user.getId(), BorrowStatus.APPROVED).stream()
                 .map(borrowRequestMapper::toResponse)
                 .toList();
     }

@@ -88,20 +88,21 @@ public class BookService {
                 .toList();
     }
 
-    public List<BookResponse> searchBooks(String keyword) {
-        List<Book> books = bookRepository.searchByTitleOrAuthor(keyword.toLowerCase());
-        return books.stream()
+    public PageResponse<BookResponse> searchBooks(String keyword, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Book> books = bookRepository.searchByTitleOrAuthor(keyword.toLowerCase(), pageable);
+        List<BookResponse> bookResponses = books.stream()
                 .map(bookMapper::toBookResponse)
                 .toList();
-    }
-
-    public BookResponse markBookAsReturned(UUID bookId, Authentication connectedUser) {
-        User user = (User) connectedUser.getPrincipal();
-        Book book = bookRepository.findByIdAndOwnerId(bookId, user.getId())
-                .orElseThrow(() -> new NoSuchElementException("Book not found or not owned by user"));
-        book.setIsAvailable(true);
-        Book updated = bookRepository.save(book);
-        return bookMapper.toBookResponse(updated);
+        return new PageResponse<>(
+                bookResponses,
+                books.getNumber(),
+                books.getSize(),
+                books.getTotalElements(),
+                books.getTotalPages(),
+                books.isFirst(),
+                books.isLast()
+        );
     }
 
     public void deleteBook(UUID bookId, Authentication connectedUser) {
@@ -125,5 +126,14 @@ public class BookService {
 
         Book updatedBook = bookRepository.save(book);
         return bookMapper.toBookResponse(updatedBook);
+    }
+
+    public BookResponse unarchiveBook(UUID bookId, Authentication connectedUser) {
+        User user = (User) connectedUser.getPrincipal();
+        Book book = bookRepository.findByIdAndOwnerId(bookId, user.getId())
+                .orElseThrow(() -> new NoSuchElementException("Book not found or not owned by user"));
+        book.setIsArchived(false);
+        Book archivedBook = bookRepository.save(book);
+        return bookMapper.toBookResponse(archivedBook);
     }
 }

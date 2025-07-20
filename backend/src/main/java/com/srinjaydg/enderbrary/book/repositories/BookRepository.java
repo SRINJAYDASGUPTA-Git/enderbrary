@@ -22,7 +22,7 @@ public interface BookRepository extends JpaRepository<Book, UUID> {
             SELECT b FROM Book b
             WHERE LOWER(b.title) LIKE CONCAT('%', LOWER(:lowerCase), '%')
             OR LOWER(b.author) LIKE CONCAT('%', LOWER(:lowerCase), '%')
-            AND b.isAvailable = true AND b.isArchived = false   
+            AND b.isAvailable = true AND b.isArchived = false
     """)
-    List<Book> searchByTitleOrAuthor(String lowerCase);
+    Page<Book> searchByTitleOrAuthor(String lowerCase, Pageable pageable);
 }

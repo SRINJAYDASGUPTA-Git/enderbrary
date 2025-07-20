@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -32,7 +33,6 @@ public class SecurityConfig {
                                 "/api/v1/auth/register",
                                 "/api/v1/auth/activate",
                                 "/api/v1/auth/oauth2/login",
-                                "/api/v1/books",
                                 "/v3/api-docs",
                                 "/v3/api-docs/**",
                                 "/swagger-resources",
@@ -43,6 +43,8 @@ public class SecurityConfig {
                                 "/swagger-ui.html",
                                 "/"
                         ).permitAll()
+                        .requestMatchers (HttpMethod.GET, "/api/v1/books/search").permitAll()
+                        .requestMatchers (HttpMethod.GET, "/api/v1/books").permitAll()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(ex -> ex

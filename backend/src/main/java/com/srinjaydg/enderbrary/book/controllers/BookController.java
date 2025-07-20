@@ -55,6 +55,12 @@ public class BookController {
         return ResponseEntity.ok(bookService.archiveBook(bookId, connectedUser));
     }
 
+    @PatchMapping("/{bookId}/unarchive")
+    @Operation(summary = "Un-Archive Book")
+    public ResponseEntity<BookResponse> unarchiveBook(@PathVariable UUID bookId, Authentication connectedUser) {
+        return ResponseEntity.ok(bookService.unarchiveBook(bookId, connectedUser));
+    }
+
     @DeleteMapping("/{bookId}")
     @Operation(summary = "Delete Book")
     public ResponseEntity<Void> deleteBook(@PathVariable UUID bookId, Authentication connectedUser) {
@@ -64,8 +70,10 @@ public class BookController {
 
     @GetMapping("/search")
     @Operation(summary = "Search Books", description = "Search books by keyword in title or author.")
-    public ResponseEntity<List<BookResponse>> searchBooks(@RequestParam String keyword) {
-        return ResponseEntity.ok(bookService.searchBooks(keyword));
+    public ResponseEntity<PageResponse<BookResponse>> searchBooks(@RequestParam String keyword,
+                                                                 @RequestParam(defaultValue = "0") int page,
+                                                                 @RequestParam(defaultValue = "10") int size) {
+        return ResponseEntity.ok(bookService.searchBooks(keyword, page, size));
     }
 
     @GetMapping("/{bookId}")
