@@ -18,9 +18,9 @@ import org.springframework.context.annotation.Configuration;
                         email = "dasguptasrinjay2004@gmail.com",
                         url = "https://www.srinjaydg.in/"
                 ),
-                title = "EndrLink API",
+                title = "EnderBrary API",
                 version = "1.0.0",
-                description = "EndrLink API - A platform for managing and sharing links efficiently."
+                description = "EnderBrary API - A platform for managing and sharing links efficiently."
         ),
         servers = {
                 @Server(
