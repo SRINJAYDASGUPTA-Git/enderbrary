@@ -29,7 +29,5 @@ public class UserResponse {
     private List<BookResponse> booksLent;           // Books user lent to others
     private List<BookResponse> booksBorrowed;       // Books user has borrowed
     private List<BorrowRequestResponse> borrowRequests; // Optional: user's active/incoming borrow requests
-
-    private LocalDateTime joinedAt;
 }
 
