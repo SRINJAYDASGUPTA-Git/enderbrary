@@ -9,6 +9,7 @@ import {useUser} from '@/providers/UserContext';
 import {BookResponse} from '@/types';
 import {Archive, Ban, CheckCircle2, Pencil} from 'lucide-react';
 import BookDetailsSkeleton from "@/components/BookDetailsSkeleton";
+import {toast} from "sonner";
 
 export default function BookDetailsPage() {
     const { id } = useParams();
@@ -49,6 +50,23 @@ export default function BookDetailsPage() {
             }
         }
 
+    }
+
+    async function handleBorrowRequest(id: any) {
+        try {
+            setLoading(true);
+            const response = await axios.post(`/api/v1/borrow/${id}`);
+            if(response.status === 200) {
+                toast.success('Borrow requests sent successfully!');
+            } else {
+                toast.error('Failed to send borrow requests. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error sending borrow requests:', error);
+            toast.error('An error occurred while sending the borrow requests.');
+        } finally {
+            setLoading(false);
+        }
     }
 
     return (
@@ -132,7 +150,7 @@ export default function BookDetailsPage() {
                             </>
                         ) : (
                             book.isAvailable && !book.isArchived && (
-                                <Button className="bg-purple-500 hover:bg-purple-600 text-white">
+                                <Button className="bg-purple-500 hover:bg-purple-600 text-white" onClick={()=> handleBorrowRequest(book.id)}>
                                     Request to Borrow
                                 </Button>
                             )

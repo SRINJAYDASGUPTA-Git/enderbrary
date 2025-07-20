@@ -38,6 +38,27 @@ export interface BookResponse {
     ownerEmail: string;
     ownerImageUrl: string;
 }
+export interface PaginatedBooks {
+    content: BookResponse[];
+    page: number;
+    size: number;
+    totalElements: number;
+    totalPages: number;
+    first: boolean;
+    last: boolean;
+}
+export interface BorrowRequest {
+    id: string;
+    bookId: string;
+    bookTitle: string;
+    lenderName: string;
+    borrowerName: string;
+    borrowerEmail: string;
+    borrowerImageUrl: string;
+    requestDate: string; // ISO string; you can parse to Date if needed
+    dueDate: string;
+    status: 'PENDING' | 'APPROVED' | 'REJECTED' | 'RETURNED' | string;
+}
 
 export interface Session{
     user:{

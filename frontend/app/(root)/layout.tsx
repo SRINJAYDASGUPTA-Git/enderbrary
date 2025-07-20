@@ -7,10 +7,12 @@ export default function HomeLayout({
     children: React.ReactNode
 }) {
     return (
-        <div className="w-full flex flex-col items-center justify-center h-screen p-6">
+        <div className="w-full flex flex-col items-center justify-between h-screen p-6">
+            <div className="flex items-center justify-center">
             <Navbar />
             <div className="mt-40">
             {children}
+            </div>
             </div>
             <Footer />
         </div>
