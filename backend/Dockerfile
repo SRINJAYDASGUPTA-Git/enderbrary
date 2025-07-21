@@ -20,8 +20,6 @@ COPY src $APP_HOME/src
 RUN chmod +x gradlew
 
 # Build the application
-COPY .gradle $APP_HOME/.gradle
-
 RUN ./gradlew build
 
 # Use a lightweight JRE runtime image for the application
