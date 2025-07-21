@@ -4,12 +4,17 @@ import axiosInstance from '@/utils/axiosInstance';
 import { BorrowRequest } from '@/types';
 import Loader from '@/components/Loader';
 import BorrowRequestCard from '@/components/BorrowRequestCard';
-import {toast} from "sonner"; // Adjust the path if needed
+import {toast} from "sonner";
+import {useUser} from "@/providers/UserContext"; // Adjust the path if needed
 
 const BorrowRequests = () => {
     const [borrowRequests, setBorrowRequests] = React.useState<BorrowRequest[]>([]);
     const [loading, setLoading] = React.useState(true);
-
+    const {user, loading: userLoading} = useUser();
+    if(!user){
+        toast.error('You must be logged in to edit a book');
+        window.location.replace('/login');
+    }
     useEffect(() => {
         const fetchRequests = async () => {
             try {
@@ -60,7 +65,7 @@ const BorrowRequests = () => {
     }
 
     return (
-        <div className="mt-24 px-4 md:px-10 max-w-6xl mx-auto">
+        <div className="mt-24 px-4 md:px-10 max-w-6xl mx-auto h-screen">
             <h1 className="text-3xl font-display font-semibold mb-6 text-purple-800">My Borrow Requests</h1>
 
             {borrowRequests.length > 0 ? (

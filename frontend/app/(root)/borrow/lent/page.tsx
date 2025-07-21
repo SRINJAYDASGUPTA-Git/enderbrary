@@ -5,6 +5,8 @@ import { BorrowRequest, BookResponse } from '@/types';
 import Loader from '@/components/Loader';
 import { BookCard } from '@/components/BookCard';
 import { CalendarDays } from 'lucide-react';
+import {useUser} from "@/providers/UserContext";
+import {toast} from "sonner";
 
 interface EnrichedRequest {
     request: BorrowRequest;
@@ -14,7 +16,11 @@ interface EnrichedRequest {
 const LentBooks = () => {
     const [enrichedData, setEnrichedData] = useState<EnrichedRequest[]>([]);
     const [loading, setLoading] = useState(true);
-
+    const {user, loading: userLoading} = useUser();
+    if(!user){
+        toast.error('You must be logged in to edit a book');
+        window.location.replace('/login');
+    }
     useEffect(() => {
         const fetchLentBooks = async () => {
             try {
@@ -57,7 +63,7 @@ const LentBooks = () => {
     }
 
     return (
-        <div className="mt-24 px-4 md:px-10 max-w-6xl mx-auto">
+        <div className="mt-24 px-4 md:px-10 max-w-6xl mx-auto h-screen">
             <h1 className="text-3xl font-display font-semibold mb-6 text-purple-800">
                 Books You've Lent
             </h1>

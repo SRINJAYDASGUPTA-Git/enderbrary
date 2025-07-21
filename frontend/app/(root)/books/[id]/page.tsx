@@ -16,7 +16,10 @@ export default function BookDetailsPage() {
     const { user } = useUser();
     const [book, setBook] = useState<BookResponse | null>(null);
     const [loading, setLoading] = useState(true);
-
+    if(!user){
+        toast.error('You must be logged in to edit a book');
+        window.location.replace('/login');
+    }
     useEffect(() => {
         const fetchBook = async () => {
             try {

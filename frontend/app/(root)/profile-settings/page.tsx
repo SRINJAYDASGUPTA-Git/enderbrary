@@ -42,21 +42,21 @@ export default function ProfileSettingsPage() {
 
     useEffect(() => {
         if (userLoading) return;
-
-        if (!user || user.name === 'Temporary User') {
-            toast.error('You must be a registered user to access this page');
-            return;
+        if(!user){
+            toast.error('You must be logged in to edit a book');
+            window.location.replace('/login');
         }
+        else {
+            if (!user.enabled) {
+                toast.error('Your account is not activated. Please verify your email.');
+            }
 
-        if (!user.enabled) {
-            toast.error('Your account is not activated. Please verify your email.');
+            form.reset({
+                name: user.name,
+                imageUrl: user.imageUrl || '',
+                imageFile: undefined,
+            });
         }
-
-        form.reset({
-            name: user.name,
-            imageUrl: user.imageUrl || '',
-            imageFile: undefined,
-        });
     }, [user, userLoading, form, router]);
 
     const onSubmit = async (data: ProfileSettingsValues) => {
@@ -142,7 +142,11 @@ export default function ProfileSettingsPage() {
     }
 
     if (userLoading) {
-        return <Loader subtitle="Fetching Profile Data..." />;
+        return(
+            <div className="flex items-center justify-center w-full h-full">
+                <Loader subtitle="Fetching Profile Data..." />;
+            </div>
+        )
     }
 
     if (loading) {
@@ -154,9 +158,9 @@ export default function ProfileSettingsPage() {
     }
 
     return (
-        <div className="min-h-[90%] flex flex-col lg:flex-row mt-20 w-full p-6 lg:p-10 bg-purple-50 text-purple-900">
+        <div className="min-h-[80vh] mb-20 mt-20 flex flex-col lg:flex-row w-full p-6 lg:p-10 bg-purple-50 text-purple-900">
             {/* Sidebar */}
-            <aside className="w-full lg:w-64 bg-purple-100 text-purple-800 p-6 space-y-4 rounded-xl lg:rounded-r-none flex flex-col justify-between mb-8 lg:mb-0 shadow-sm">
+            <aside className="w-full lg:w-64 bg-purple-100 text-purple-800 p-6 space-y-4 rounded-xl lg:rounded-r-none hidden md:flex flex-col justify-between mb-8 lg:mb-0 shadow-sm">
                 <div>
                     <h2 className="text-xl font-display font-semibold">Account</h2>
                     <p className="text-sm text-purple-600">Manage your account info.</p>

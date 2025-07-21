@@ -7,12 +7,18 @@ import axiosInstance from "@/utils/axiosInstance";
 import {useRouter} from "next/navigation";
 import {BookCard} from "@/components/BookCard";
 import axios from "@/utils/axiosInstance";
+import {toast} from "sonner";
 
 const MyBooks = () => {
     const {user, loading} = useUser();
     const [books, setBooks] = useState<BookResponse[]>([]);
     const [loadingBooks, setLoadingBooks] = useState(false);
     const router = useRouter();
+
+    if(!user){
+        toast.error('You must be logged in to edit a book');
+        window.location.replace('/login');
+    }
     useEffect(() => {
         const fetchBooks = async () => {
             if (!user) return;
@@ -56,7 +62,7 @@ const MyBooks = () => {
     }
 
     return (
-       <div className={' font-bold text-center flex flex-col items-center justify-center w-full text-black'}>
+       <div className={'mt-40 mb-40 font-bold text-center flex flex-col items-center justify-center w-full text-black h-screen'}>
            <span className={'text-3xl font-semibold mb-5'}>My Books</span>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl px-4">
                 {books.length > 0 ? (

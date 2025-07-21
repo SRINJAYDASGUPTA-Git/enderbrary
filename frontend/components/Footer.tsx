@@ -5,7 +5,7 @@ import { BookHeart, Github, Mail } from 'lucide-react';
 
 export default function Footer() {
     return (
-        <footer className="mt-20 w-full bg-purple-50 text-purple-800 border-t border-purple-200 px-6 py-10 text-sm font-display">
+        <footer className="bottom-0 left-0 w-full bg-purple-50 text-purple-800 border-t border-purple-200 px-6 py-10 text-sm font-display z-50">
             <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
                 {/* Left - Logo or text */}
                 <div className="flex items-center gap-2">

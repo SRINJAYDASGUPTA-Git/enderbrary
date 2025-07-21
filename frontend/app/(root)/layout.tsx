@@ -7,14 +7,14 @@ export default function HomeLayout({
     children: React.ReactNode
 }) {
     return (
-        <div className="w-full flex flex-col items-center justify-between h-screen p-6">
-            <div className="flex items-center justify-center">
-            <Navbar />
-            <div className="mt-40">
-            {children}
+        <div className="w-full flex flex-col items-center justify-between min-h-screen bg-gray-50">
+            <div className="flex items-center justify-center w-full max-w-6xl mx-auto">
+                <Navbar/>
+                <div className="md:mt-20 flex w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+                    {children}
+                </div>
             </div>
-            </div>
-            <Footer />
+            <Footer/>
         </div>
     );
 }

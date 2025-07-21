@@ -18,8 +18,14 @@ const isExpired = (token: string | null): boolean => {
 axiosInstance.interceptors.request.use(async (config) => {
     if (typeof window === "undefined") return config;
 
-    const publicPaths = ["/api/v1/auth/login", "/api/v1/auth/register", "/api/v1/auth/oauth2/login"];
-    const isPublic = publicPaths.some((path) => config.url?.includes(path));
+    const publicPaths = [
+        "/api/v1/auth/login",
+        "/api/v1/auth/register",
+        "/api/v1/auth/oauth2/login",
+        // Only public for GET requests
+        ...(config.method === "get" && (config.url === "/api/v1/books" || config.url?.startsWith("/api/v1/books/search")) ? [config.url] : [])
+    ];
+    const isPublic = publicPaths.includes(config.url!);
 
     if (isPublic) return config;
 

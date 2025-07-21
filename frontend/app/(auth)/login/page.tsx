@@ -54,7 +54,7 @@ export default function LoginForm() {
 
   useEffect(() => {
     if (session?.user) {
-      // Optional redirect logic here
+      window.location.replace('/')
     }
   }, [session]);
 

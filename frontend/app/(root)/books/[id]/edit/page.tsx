@@ -14,6 +14,7 @@ import axios from '@/utils/axiosInstance';
 import { useParams, useRouter } from 'next/navigation';
 import Loader from '@/components/Loader';
 import { uploadToImgbb } from '@/lib/utils';
+import {useUser} from "@/providers/UserContext";
 
 export default function EditBookPage() {
     const router = useRouter();
@@ -21,6 +22,11 @@ export default function EditBookPage() {
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
 
+    const {user, loading: userLoading} = useUser();
+    if(!user){
+        toast.error('You must be logged in to edit a book');
+        window.location.replace('/login');
+    }
     const form = useForm<BookFormData>({
         resolver: zodResolver(BookSchema),
         defaultValues: {

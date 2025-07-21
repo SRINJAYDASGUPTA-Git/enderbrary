@@ -6,6 +6,7 @@ import axios from '@/utils/axiosInstance';
 import { BookCard } from '@/components/BookCard';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import {useUser} from "@/providers/UserContext";
 
 export default function ExplorePage() {
     const [books, setBooks] = useState<PaginatedBooks | null>(null);
@@ -13,6 +14,7 @@ export default function ExplorePage() {
     const [search, setSearch] = useState('');
     const [debouncedSearch, setDebouncedSearch] = useState('');
     const size = 8;
+    const {user, loading: userLoading} = useUser();
 
     // Debounce logic
     useEffect(() => {
@@ -31,19 +33,33 @@ export default function ExplorePage() {
                 const res = await axios.get(
                     `/api/v1/books/search?keyword=${encodeURIComponent(debouncedSearch)}&page=${page}&size=${size}`
                 );
-                setBooks(res.data);
+                if(user && !userLoading) {
+                    const currentUserId = user.email;
+                    console.log(currentUserId)
+
+                    const filteredBooks = {
+                        ...res.data,
+                        content: res.data.content.filter((book: any) => book.ownerEmail !== currentUserId),
+                    };
+                    setBooks(filteredBooks);
+                } else {
+                    setBooks(res.data);
+                }
+
             } catch (err) {
                 console.error('Failed to load books:', err);
             }
         };
 
         fetchBooks();
-    }, [page, debouncedSearch]);
-
+    }, [page, debouncedSearch, user, userLoading]);
+    
+    if(userLoading)
+        return <div className="text-center mt-10">Loading user...</div>;
     if (!books) return <div className="text-center mt-10">Loading books...</div>;
 
     return (
-        <div className="max-w-6xl mx-auto px-4 py-10 space-y-10 bg-purple-50 sm:px-8 pt-12 pb-12 text-purple-900 font-display">
+        <div className="max-w-6xl mx-auto px-4 py-10 space-y-10 bg-purple-50 sm:px-8 pt-12 pb-12 text-purple-900 font-display h-fit">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <h1 className="text-3xl font-semibold">📚 Explore Books</h1>
                 <Input

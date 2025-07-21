@@ -66,6 +66,11 @@ export const UserButton = () => {
                     <span>My Archived Books</span>
                 </DropdownMenuItem>
 
+                <DropdownMenuItem onClick={() => router.push('/books/add')}>
+                    <BookAIcon className="mr-2 h-4 w-4" />
+                    <span>Add New Book</span>
+                </DropdownMenuItem>
+
                 <DropdownMenuSeparator />
 
                 <DropdownMenuLabel>Borrow Requests</DropdownMenuLabel>
