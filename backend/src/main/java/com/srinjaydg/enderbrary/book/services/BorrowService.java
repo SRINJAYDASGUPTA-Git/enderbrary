@@ -198,13 +198,9 @@ public class BorrowService {
                 borrowRequest.getBorrower().getName(),
                 borrowRequest.getBook().getTitle(),
                 EmailTemplatename.BORROW_REQUEST,
-                manageRequestUrl
+                manageRequestUrl+"/incoming-requests"
         );
     }
-    private String buildManageRequestUrl(UUID requestId) {
-        return manageRequestUrl + "?requestId=" + requestId;
-    }
-
     private void sendApprovalNotification(BorrowRequest borrowRequest) throws MessagingException, UnsupportedEncodingException {
         log.info("Sending approval email for borrow request ID: {}", borrowRequest.getId());
         emailService.sendBorrowApprovedEmail(
@@ -212,7 +208,7 @@ public class BorrowService {
                 borrowRequest.getBorrower().getName(),
                 borrowRequest.getLender().getName(),
                 borrowRequest.getBook().getTitle(),
-                buildManageRequestUrl(borrowRequest.getId())
+                manageRequestUrl+"/requests"
         );
     }
 
@@ -233,7 +229,7 @@ public class BorrowService {
                 borrowRequest.getLender().getName(),
                 borrowRequest.getBorrower().getName(),
                 borrowRequest.getBook().getTitle(),
-                buildManageRequestUrl(borrowRequest.getId())
+                manageRequestUrl+"/incoming-requests"
         );
     }
 
@@ -243,8 +239,7 @@ public class BorrowService {
                 borrowRequest.getBorrower().getEmail(),
                 borrowRequest.getBorrower().getName(),
                 borrowRequest.getLender().getName(),
-                borrowRequest.getBook().getTitle(),
-                buildManageRequestUrl(borrowRequest.getId())
+                borrowRequest.getBook().getTitle()
         );
     }
 

@@ -5,6 +5,7 @@ import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -26,6 +27,9 @@ public class EmailService {
 
     private final JavaMailSender mailSender;
     private final SpringTemplateEngine templateEngine;
+
+    @Value ("${application.frontend.url}")
+    private String frontendUrl;
 
     @Async
     public void sendActivationMail(
@@ -159,6 +163,7 @@ public class EmailService {
         props.put("borrowerName", borrowerName);
         props.put("lenderName", lenderName);
         props.put("bookTitle", bookTitle);
+        props.put ("bookExploreUrl", frontendUrl);
 
         Context context = new Context();
         context.setVariables(props);
@@ -179,8 +184,7 @@ public class EmailService {
             String to,
             String borrowerName,
             String lenderName,
-            String bookTitle,
-            String exploreUrl
+            String bookTitle
     ) throws MessagingException {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, UTF_8.name());
@@ -189,7 +193,7 @@ public class EmailService {
         props.put("borrowerName", borrowerName);
         props.put("lenderName", lenderName);
         props.put("bookTitle", bookTitle);
-        props.put("exploreUrl", exploreUrl);
+        props.put("exploreUrl", frontendUrl);
 
         Context context = new Context();
         context.setVariables(props);

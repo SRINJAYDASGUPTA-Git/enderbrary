@@ -4,31 +4,58 @@
   <meta charset="UTF-8" />
   <title>Return Completed</title>
 </head>
-<body style="margin: 0; padding: 0; background-color: #ffffff;">
-<div style="max-width: 600px; margin: 40px auto; padding: 30px; border-radius: 12px; background-color: #1a1a1a; color: #e5e7eb; font-family: Arial, sans-serif; text-align: center;">
+<body style="margin: 0; padding: 0; background-color: #f0f9ff; font-family: Arial, sans-serif;">
+<div style="
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 12px;
+  background-color: #e0f2fe;
+  color: #0c4a6e;
+  text-align: center;
+  border: 1px solid #bae6fd;
+  box-shadow: 0 4px 12px rgba(191, 219, 254, 0.3);
+">
 
   <!-- Logo -->
-  <img src="cid:logoImage" alt="Enderbrary Logo" width="80" style="margin-bottom: 20px;" />
+  <img src="cid:logoImage" alt="EnderBrary Logo" width="80" style="margin-bottom: 20px;" />
 
   <!-- Title -->
-  <h1 style="font-size: 24px; margin: 0 0 10px; color: #38bdf8;">Book Returned Successfully</h1>
+  <h1 style="font-size: 24px; margin: 0 0 10px; color: #38bdf8;">
+    ✅ Book Returned Successfully
+  </h1>
 
   <!-- Greeting -->
-  <p style="font-size: 16px; margin: 0 0 10px; color: #d1d5db;">
+  <p style="font-size: 16px; margin: 0 0 10px; color: #0c4a6e;">
     Hello <strong th:text="${borrowerName}">Borrower</strong>,
   </p>
 
   <!-- Message -->
-  <p style="font-size: 15px; margin-bottom: 30px; color: #a1a1aa;">
-    Your return for <em th:text="${bookTitle}">Book Title</em> has been confirmed by <strong th:text="${lenderName}">Lender</strong>. Thank you for using Enderbrary responsibly!
+  <p style="font-size: 15px; margin-bottom: 30px; color: #075985;">
+    Your return for <em th:text="${bookTitle}">Book Title</em> has been confirmed by <strong th:text="${lenderName}">Lender</strong>.
+    Thanks for being an awesome part of the EnderBrary community!
   </p>
 
   <!-- CTA -->
   <a th:href="${exploreUrl}" href="https://localhost:3000/explore" target="_blank"
-     style="display: inline-block; background-color: #38bdf8; color: #1a1a1a; text-decoration: none; padding: 12px 24px; border-radius: 6px; font-weight: bold; font-size: 15px;">
+     style="
+      display: inline-block;
+      background-color: #38bdf8;
+      color: #ffffff;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 15px;
+      box-shadow: 0 2px 6px rgba(56, 189, 248, 0.25);
+    ">
     Find Another Book
   </a>
 
+  <!-- Friendly Footer -->
+  <p style="font-size: 13px; color: #0369a1; margin-top: 30px;">
+    Keep the pages turning with EnderBrary 📖✨
+  </p>
 </div>
 </body>
 </html>

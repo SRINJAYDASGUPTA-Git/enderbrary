@@ -4,24 +4,60 @@
   <meta charset="UTF-8" />
   <title>Borrow Request Rejected</title>
 </head>
-<body style="margin: 0; padding: 0; background-color: #ffffff;">
-<div style="max-width: 600px; margin: 40px auto; padding: 30px; border-radius: 12px; background-color: #1a1a1a; color: #e5e7eb; font-family: Arial, sans-serif; text-align: center;">
+<body style="margin: 0; padding: 0; background-color: #fff1f2; font-family: Arial, sans-serif;">
+<div style="
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 12px;
+  background-color: #fef2f2;
+  color: #7f1d1d;
+  text-align: center;
+  border: 1px solid #fecaca;
+  box-shadow: 0 4px 12px rgba(252, 165, 165, 0.1);
+">
 
-  <img src="cid:logoImage" alt="Enderbrary Logo" width="80" style="margin-bottom: 20px;" />
-  <h1 style="font-size: 24px; margin: 0 0 10px; color: #f87171;">Request Rejected</h1>
+  <!-- Logo -->
+  <img src="cid:logoImage" alt="EnderBrary Logo" width="80" style="margin-bottom: 20px;" />
 
-  <p style="font-size: 16px; margin: 0 0 10px; color: #d1d5db;">
+  <!-- Title -->
+  <h1 style="font-size: 24px; margin: 0 0 10px; color: #f87171;">
+    ❌ Request Rejected
+  </h1>
+
+  <!-- Greeting -->
+  <p style="font-size: 16px; margin: 0 0 10px; color: #991b1b;">
     Hello <strong th:text="${borrowerName}">Borrower</strong>,
   </p>
 
-  <p style="font-size: 15px; margin-bottom: 30px; color: #a1a1aa;">
+  <!-- Message -->
+  <p style="font-size: 15px; margin-bottom: 30px; color: #7f1d1d;">
     Unfortunately, your request to borrow <em th:text="${bookTitle}">Book Title</em> was not approved by the owner.
+    Don't worry—there are plenty of other great reads waiting for you!
   </p>
 
-  <a th:href="${bookExploreUrl}" href="https://localhost:3000/explore" target="_blank"
-     style="display: inline-block; background-color: #f87171; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 6px; font-weight: bold; font-size: 15px;">
+  <!-- CTA Button -->
+  <a th:href="${bookExploreUrl}"
+     href="https://localhost:3000/"
+     target="_blank"
+     style="
+      display: inline-block;
+      background-color: #f87171;
+      color: #ffffff;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 15px;
+      box-shadow: 0 2px 6px rgba(248, 113, 113, 0.2);
+    ">
     Browse Other Books
   </a>
+
+  <!-- Friendly Footer -->
+  <p style="font-size: 13px; color: #991b1b; margin-top: 30px;">
+    Keep reading and sharing with EnderBrary 📚💜
+  </p>
 </div>
 </body>
 </html>
