@@ -13,13 +13,16 @@ import {toast} from "sonner";
 
 export default function BookDetailsPage() {
     const { id } = useParams();
-    const { user } = useUser();
+    const { user, loading: userLoading } = useUser();
     const [book, setBook] = useState<BookResponse | null>(null);
     const [loading, setLoading] = useState(true);
-    if(!user){
-        toast.error('You must be logged in to edit a book');
-        window.location.replace('/login');
-    }
+    useEffect(() => {
+        if (!userLoading && !user) {
+            toast.error('You must be logged in to edit a book');
+            window.location.replace('/login');
+        }
+    }, [userLoading, user]);
+
     useEffect(() => {
         const fetchBook = async () => {
             try {

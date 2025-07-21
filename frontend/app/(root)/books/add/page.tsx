@@ -12,7 +12,7 @@ import {toast} from 'sonner';
 import axios from '@/utils/axiosInstance';
 import {useRouter} from 'next/navigation';
 import {uploadToImgbb} from '@/lib/utils';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useUser} from '@/providers/UserContext';
 import Loader from '@/components/Loader';
 
@@ -21,10 +21,13 @@ export default function AddBookPage() {
     const {user, loading: userLoading} = useUser();
     const [submitting, setSubmitting] = useState(false);
 
-    if (!user && !userLoading) {
-        toast.error('You must be logged in to add a book');
-        window.location.replace('/login');
-    }
+    useEffect(() => {
+        if (!userLoading && !user) {
+            toast.error('You must be logged in to edit a book');
+            window.location.replace('/login');
+        }
+    }, [userLoading, user]);
+
 
     const form = useForm<BookFormData>({
         resolver: zodResolver(BookSchema),

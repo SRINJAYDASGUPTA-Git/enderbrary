@@ -11,10 +11,12 @@ const IncomingBorrowRequests = () => {
     const [requests, setRequests] = useState<BorrowRequest[]>([]);
     const [loading, setLoading] = useState(true);
     const {user, loading: userLoading} = useUser();
-    if(!user){
-        toast.error('You must be logged in to edit a book');
-        window.location.replace('/login');
-    }
+    useEffect(() => {
+        if (!userLoading && !user) {
+            toast.error('You must be logged in to edit a book');
+            window.location.replace('/login');
+        }
+    }, [userLoading, user]);
     useEffect(() => {
         const fetchIncoming = async () => {
             try {

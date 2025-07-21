@@ -15,10 +15,13 @@ const MyBooks = () => {
     const [loadingBooks, setLoadingBooks] = useState(false);
     const router = useRouter();
 
-    if(!user){
-        toast.error('You must be logged in to edit a book');
-        window.location.replace('/login');
-    }
+    useEffect(() => {
+        if (!loading && !user) {
+            toast.error('You must be logged in to edit a book');
+            window.location.replace('/login');
+        }
+    }, [loading, user]);
+
     useEffect(() => {
         const fetchBooks = async () => {
             if (!user) return;

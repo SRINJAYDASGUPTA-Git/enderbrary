@@ -23,10 +23,12 @@ export default function EditBookPage() {
     const [submitting, setSubmitting] = useState(false);
 
     const {user, loading: userLoading} = useUser();
-    if(!user){
-        toast.error('You must be logged in to edit a book');
-        window.location.replace('/login');
-    }
+    useEffect(() => {
+        if (!userLoading && !user) {
+            toast.error('You must be logged in to edit a book');
+            window.location.replace('/login');
+        }
+    }, [userLoading, user]);
     const form = useForm<BookFormData>({
         resolver: zodResolver(BookSchema),
         defaultValues: {
